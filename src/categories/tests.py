@@ -1,5 +1,4 @@
 from django.test import TestCase
-
 from playlists.models import Playlist
 from .models import Category
 
@@ -20,3 +19,10 @@ class CategoryTestCase(TestCase):
     def test_related_playlist(self):
         qs = self.cat_a.playlists.all()
         self.assertEqual(qs.count(), 1)
+
+    def test_inactive_category_no_related_playlists(self):
+        qs = self.cat_b.playlists.all()
+        self.assertEqual(qs.count(), 0)
+
+    def test_slug_generation(self):
+        self.assertEqual(self.cat_a.slug, 'action')
